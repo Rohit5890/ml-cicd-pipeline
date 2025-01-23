@@ -25,12 +25,15 @@ def test_train_test_split():
     )
 
     # Ensure the train-test split is correct
-    assert X_train.shape[0] == 120  # 120 samples in the training set
-    assert X_test.shape[0] == 30  # 30 samples in the test set
-    assert (
-        len(np.unique(y_train)) == 3
-    )  # All classes should be present in the training set
-    assert len(np.unique(y_test)) == 3  # All classes should be present in the test set
+
+    # 120 samples in the training set
+    assert X_train.shape[0] == 120
+    # 30 samples in the test set
+    assert X_test.shape[0] == 30
+    # All classes should be present in the training set
+    assert len(np.unique(y_train)) == 3
+    # All classes should be present in the test set
+    assert len(np.unique(y_test)) == 3
 
 
 # Test model training and prediction
