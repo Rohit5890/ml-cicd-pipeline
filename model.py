@@ -1,6 +1,7 @@
 # model.py
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
+
 # from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
@@ -27,4 +28,4 @@ y_pred = model.predict(X_test)
 print(f"Accuracy: {accuracy_score(y_test, y_pred)}")
 
 # Save the model
-joblib.dump(model, 'model.pkl')
+joblib.dump(model, "model.pkl")
