@@ -74,4 +74,4 @@ def test_model_saving():
     # Check if the model file is created
     loaded_model = joblib.load("model.pkl")
     # Ensure the loaded model is of type SVC
-    assert isinstance(loaded_model, SVC)  
+    assert isinstance(loaded_model, SVC)
