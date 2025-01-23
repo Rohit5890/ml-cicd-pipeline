@@ -12,20 +12,30 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
+      - name: Checkout repository
         uses: actions/checkout@v2
+
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.12'
+
+      - name: Install required system dependencies (distutils, setuptools, wheel)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-distutils
+          pip install --upgrade setuptools wheel
+
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Run linter
+
+      - name: Lint the code
         run: |
-          pip install flake8
           flake8 .
+
+  
 
   test:
     runs-on: ubuntu-latest
