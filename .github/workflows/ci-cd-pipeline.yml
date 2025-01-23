@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
@@ -40,12 +40,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install --upgrade numpy scikit-learn  # Ensures compatibility with latest versions
           pip install -r requirements.txt  # Ensure all dependencies are installed
 
       - name: Check installed versions
