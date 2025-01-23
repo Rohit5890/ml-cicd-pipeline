@@ -49,8 +49,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
+          # pip install --upgrade pip
           # pip install numpy==1.23.0 scikit-learn==1.2.0  # Adjust versions to be compatible
+          pip install setuptools wheel
           pip install -r requirements.txt
 
       - name: Check installed versions
