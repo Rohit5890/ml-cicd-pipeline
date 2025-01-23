@@ -11,6 +11,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -20,11 +21,10 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install required system dependencies (distutils, setuptools, wheel)
+      - name: Install required system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-distutils
-          pip install --upgrade setuptools wheel
+          sudo apt-get install -y python3-distutils python3-dev build-essential
 
       - name: Install dependencies
         run: |
