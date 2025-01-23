@@ -30,8 +30,6 @@ jobs:
           flake8 .
           black --check .
 
-  
-
   test:
     runs-on: ubuntu-latest
 
@@ -48,8 +46,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          pip install --upgrade pip
+          pip install --upgrade numpy
+          pip install --upgrade scikit-learn
           pip install -r requirements.txt
-          pip install pytest
 
       - name: Run tests
         run: |
