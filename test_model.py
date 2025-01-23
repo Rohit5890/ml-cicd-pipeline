@@ -1,4 +1,3 @@
-import pytest
 import joblib
 import numpy as np
 from sklearn.datasets import load_iris
@@ -21,13 +20,17 @@ def test_train_test_split():
     iris = load_iris()
     X = iris.data
     y = iris.target
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+
     # Ensure the train-test split is correct
     assert X_train.shape[0] == 120  # 120 samples in the training set
-    assert X_test.shape[0] == 30    # 30 samples in the test set
-    assert len(np.unique(y_train)) == 3  # All classes should be present in the training set
-    assert len(np.unique(y_test)) == 3   # All classes should be present in the test set
+    assert X_test.shape[0] == 30  # 30 samples in the test set
+    assert (
+        len(np.unique(y_train)) == 3
+    )  # All classes should be present in the training set
+    assert len(np.unique(y_test)) == 3  # All classes should be present in the test set
 
 
 # Test model training and prediction
@@ -35,13 +38,17 @@ def test_model_training():
     iris = load_iris()
     X = iris.data
     y = iris.target
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
 
     model = SVC()
     model.fit(X_train, y_train)
 
     y_pred = model.predict(X_test)
-    assert y_pred.shape == y_test.shape  # Ensure predictions are the same shape as the test labels
+    assert (
+        y_pred.shape == y_test.shape
+    )  # Ensure predictions are the same shape as the test labels
     accuracy = accuracy_score(y_test, y_pred)
     assert accuracy > 0.9  # Ensure accuracy is reasonable
 
@@ -51,7 +58,9 @@ def test_model_saving():
     iris = load_iris()
     X = iris.data
     y = iris.target
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
 
     model = SVC()
     model.fit(X_train, y_train)
