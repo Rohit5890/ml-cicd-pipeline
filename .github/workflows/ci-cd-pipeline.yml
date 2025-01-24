@@ -42,8 +42,10 @@ jobs:
         with:
           python-version: '3.12'
   
-      - name: Install distutils
-        run: sudo apt-get update && sudo apt-get install -y python3-distutils
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-setuptools python3-wheel
   
       - name: Install dependencies
         run: |
@@ -57,6 +59,7 @@ jobs:
       - name: Run tests
         run: |
           pytest --maxfail=1 --disable-warnings -v
+
 
 
   # deploy:
