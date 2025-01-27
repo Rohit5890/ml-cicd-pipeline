@@ -10,6 +10,12 @@ import numpy as np
 app = Flask(__name__)
 
 
+def get_latest_version(model_name, client):
+    return client.get_latest_versions(model_name, stages=["None"])[
+            0
+        ]
+
+
 def load_model():
     try:
         mlflow.set_tracking_uri("http://host.docker.internal:5000")
@@ -17,8 +23,7 @@ def load_model():
         client = MlflowClient()
 
         # Get the latest version of the model
-        latest_model_version = client.get_latest_versions(
-            model_name, stages=["None"])[0]
+        latest_model_version = get_latest_version(model_name, client)
         print(f"Latest model version: {latest_model_version.version}")
 
         # Construct the model URI for MLflow registry
