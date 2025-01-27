@@ -62,7 +62,7 @@ with mlflow.start_run():
     )
     grid_search.fit(X_train, y_train)
     # Log the best parameters found
-    best_params = grid_search.best_params_
+    best_params = grid_search.best_param
     mlflow.log_params(best_params)
     # Get the best model and its accuracy
     best_model = grid_search.best_estimator_
