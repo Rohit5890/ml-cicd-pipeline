@@ -3,6 +3,7 @@ import mlflow.pyfunc
 from flask import Flask, request, jsonify
 from mlflow.tracking import MlflowClient
 import numpy as np
+
 # import joblib
 
 # Initialize the Flask app
@@ -16,9 +17,9 @@ def load_model():
         client = MlflowClient()
 
         # Get the latest version of the model
-        latest_model_version = client.get_latest_versions(
-            model_name, stages=["None"]
-        )[0]
+        latest_model_version = client.get_latest_versions(model_name, stages=["None"])[
+            0
+        ]
         print(f"Latest model version: {latest_model_version.version}")
 
         # Construct the model URI for MLflow registry
@@ -37,7 +38,7 @@ model = load_model()
 
 
 # Define the predict endpoint
-@app.route('/predict', methods=['POST'])
+@app.route("/predict", methods=["POST"])
 def predict():
     if model is None:
         return jsonify({"error": "Model could not be loaded"}), 500
@@ -47,12 +48,10 @@ def predict():
         data = request.get_json()
 
         # Check the 'features' key is present in the request data
-        if 'features' not in data:
-            return jsonify({
-                "error": "Missing 'features' in the input data."
-            }), 400
+        if "features" not in data:
+            return jsonify({"error": "Missing 'features' in the input data."}), 400
 
-        features = np.array(data['features']).reshape(1, -1)
+        features = np.array(data["features"]).reshape(1, -1)
 
         prediction = model.predict(features)
         return jsonify({"prediction": prediction[0]})
@@ -60,5 +59,5 @@ def predict():
         return jsonify({"error": f"Error during prediction: {str(e)}"}), 500
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5001, debug=True)

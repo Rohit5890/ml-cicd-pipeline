@@ -1,5 +1,6 @@
 # model.py
 import pandas as pd
+
 # from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split, GridSearchCV
 
@@ -10,10 +11,11 @@ import joblib
 
 import mlflow
 import mlflow.sklearn
+
 # Load the dataset
 iris = pd.read_csv("./data/iris.csv")
-X = iris.drop('variety', axis=1)
-y = iris['variety']
+X = iris.drop("variety", axis=1)
+y = iris["variety"]
 
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(
@@ -35,9 +37,9 @@ input_example = X_test[0:1]
 model = SVC()
 # model = RandomForestClassifier()
 param_grid = {
-    'C': [0.1, 1, 10],
-    'kernel': ['linear', 'rbf'],
-    'gamma': ['scale', 'auto']
+    "C": [0.1, 1, 10],
+    "kernel": ["linear", "rbf"],
+    "gamma": ["scale", "auto"],
 }
 
 # # Perform GridSearchCV
