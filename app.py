@@ -8,16 +8,17 @@ import numpy as np
 # Initialize the Flask app
 app = Flask(__name__)
 
+
 def load_model():
-
-
     try:
         mlflow.set_tracking_uri("http://host.docker.internal:5000")
         model_name = "iris-model"
         client = MlflowClient()
 
         # Get the latest version of the model
-        latest_model_version = client.get_latest_versions(model_name, stages=["None"])[0]
+        latest_model_version = client.get_latest_versions(
+            model_name, stages=["None"]
+        )[0]
         print(f"Latest model version: {latest_model_version.version}")
 
         # Construct the model URI for MLflow registry
@@ -32,6 +33,7 @@ def load_model():
 
 # Load the model once at app startup
 model = load_model()
+
 
 # Define the predict endpoint
 @app.route('/predict', methods=['POST'])
@@ -48,19 +50,15 @@ def predict():
         # Ensure the 'features' key is present in the request data
         if 'features' not in data:
             return jsonify({"error": "Missing 'features' in the input data."}), 400
-
-        # Extract the features from the incoming JSON data
+            
         features = np.array(data['features']).reshape(1, -1)
 
-        # Make the prediction using the model
         prediction = model.predict(features)
 
-        # Return the prediction as a JSON response
-        return jsonify({"prediction": prediction[0]})  # Convert prediction to a list if necessary
+        return jsonify({"prediction": prediction[0]})
     
     except Exception as e:
         return jsonify({"error": f"Error during prediction: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    # Run the app, make it listen on all interfaces (for Docker or production usage)
     app.run(host='0.0.0.0', port=5001, debug=True)
