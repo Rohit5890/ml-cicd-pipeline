@@ -31,6 +31,7 @@ def load_model():
         print(f"Error loading model: {e}")
         return None
 
+
 # Load the model once at app startup
 model = load_model()
 
@@ -38,8 +39,6 @@ model = load_model()
 # Define the predict endpoint
 @app.route('/predict', methods=['POST'])
 def predict():
-
-
     if model is None:
         return jsonify({"error": "Model could not be loaded"}), 500
 
@@ -47,18 +46,19 @@ def predict():
         # Get the input data from the request (assuming JSON format)
         data = request.get_json()
 
-        # Ensure the 'features' key is present in the request data
+        # Check the 'features' key is present in the request data
         if 'features' not in data:
-            return jsonify({"error": "Missing 'features' in the input data."}), 400
-            
+            return jsonify({
+                "error": "Missing 'features' in the input data."
+            }), 400
+
         features = np.array(data['features']).reshape(1, -1)
 
         prediction = model.predict(features)
-
         return jsonify({"prediction": prediction[0]})
-    
     except Exception as e:
         return jsonify({"error": f"Error during prediction: {str(e)}"}), 500
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
