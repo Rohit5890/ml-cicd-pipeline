@@ -1,7 +1,9 @@
 # model.py
 import pandas as pd
+
 # from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split, GridSearchCV
+
 # from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
