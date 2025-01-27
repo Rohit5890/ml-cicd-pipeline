@@ -9,13 +9,11 @@ import numpy as np
 app = Flask(__name__)
 
 def load_model():
-    try:
-        # Set the MLflow tracking URI to the local MLflow server running on the host machine (in case of Docker)
-        mlflow.set_tracking_uri("http://host.docker.internal:5000")  # Change if using a different URI
-        # Define the model name
-        model_name = "iris-model"
 
-        # Connect to the MLflow Client
+
+    try:
+        mlflow.set_tracking_uri("http://host.docker.internal:5000")
+        model_name = "iris-model"
         client = MlflowClient()
 
         # Get the latest version of the model
