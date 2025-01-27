@@ -81,6 +81,7 @@ with mlflow.start_run():
     print(f"Accuracy: {accuracy_value}")
     mlflow.sklearn.log_model(best_model, "iris-model")
     mlflow.log_metric("accuracy", accuracy_value)
-    mlflow.register_model(f"runs:/{mlflow.active_run().info.run_id}/iris-model", "iris-model")
+    model_path = f"runs:/{mlflow.active_run().info.run_id}/iris-model"
+    mlflow.register_model(model_path, "iris-model")
 # Save the model
 joblib.dump(model, "model.pkl")
