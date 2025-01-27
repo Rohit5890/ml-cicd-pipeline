@@ -1,0 +1,59 @@
+# services:
+#   mlflow:
+#     image: "ghcr.io/mlflow/mlflow"
+#     environment:
+#       - MLFLOW_SERVER_FILE_STORE=/mlflow
+#       - MLFLOW_SERVER_ARTIFACT_ROOT=/mlflow/artifacts
+#     volumes:
+#       - mlflow_db:/mlflow
+#       - mlflow_artifacts:/mlflow/artifacts
+#     ports:
+#       - "5000:5000"
+#     command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow.db --default-artifact-root /mlflow/artifacts
+#     networks:
+#       - app_network
+
+# volumes:
+#   mlflow_db:
+#   mlflow_artifacts:
+# networks:
+#   app_network:
+#     driver: bridge
+
+
+version: "3.8"
+services:
+  mlflow:
+    image: "ghcr.io/mlflow/mlflow:latest"
+    environment:
+      - MLFLOW_SERVER_FILE_STORE=/mlruns
+      - MLFLOW_SERVER_ARTIFACT_ROOT=/mlruns/artifacts  # Consistent artifact path
+    volumes:
+      - mlflow_db:/mlflow
+      - mlflow_artifacts:/mlflow/artifacts  # Consistent artifact volume mapping
+    ports:
+      - "5000:5000"  # Expose port 5000 for MLflow UI
+    command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow.db --artifacts-destination /mlruns/artifacts  # Consistent artifact path
+    networks:
+      - app_network
+
+  # Example Flask App (uncomment if you want to add Flask integration)
+  # your_flask_app:
+  #   build: ./flask-app  # Path to your Flask app
+  #   depends_on:
+  #     - mlflow
+  #   networks:
+  #     - app_network
+  #   ports:
+  #     - "5001:5001"  # Assuming Flask app runs on port 5001
+  #   environment:
+  #     - MLFLOW_TRACKING_URI=http://mlflow:5000  # mlflow service name
+
+volumes:
+  mlflow_db:
+  mlflow_artifacts:
+
+networks:
+  app_network:
+    driver: bridge
+

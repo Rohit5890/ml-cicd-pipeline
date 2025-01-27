@@ -5,5 +5,7 @@ scikit-learn==1.6.0
 joblib==1.2.0
 pytest==8.3.4
 flake8==4.0.1
-fastapi
-uvicorn
+Flask==3.1.0
+mlflow
+# uvicorn
+# gunicorn==23.0.0
