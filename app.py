@@ -11,9 +11,7 @@ app = Flask(__name__)
 
 
 def get_latest_version(model_name, client):
-    return client.get_latest_versions(model_name, stages=["None"])[
-            0
-        ]
+    return client.get_latest_versions(model_name, stages=["None"])[0]
 
 
 def load_model():
