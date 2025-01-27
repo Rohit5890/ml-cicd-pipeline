@@ -17,9 +17,8 @@ def load_model():
         client = MlflowClient()
 
         # Get the latest version of the model
-        latest_model_version = client.get_latest_versions(model_name, stages=["None"])[
-            0
-        ]
+        latest_model_version = client.get_latest_versions(
+            model_name, stages=["None"])[0]
         print(f"Latest model version: {latest_model_version.version}")
 
         # Construct the model URI for MLflow registry
@@ -49,7 +48,7 @@ def predict():
 
         # Check the 'features' key is present in the request data
         if "features" not in data:
-            return jsonify({"error": "Missing 'features' in the input data."}), 400
+            return jsonify({"error": "Missing 'features' in inputs."}), 400
 
         features = np.array(data["features"]).reshape(1, -1)
 
