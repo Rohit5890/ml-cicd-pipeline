@@ -61,21 +61,53 @@ jobs:
           pytest --maxfail=1 --disable-warnings -v
 
 
-
-  # deploy:
+  # place holder for deployment taks [optional] 
+  # build_and_deploy:
   #   runs-on: ubuntu-latest
-  #   needs: test
+
   #   steps:
-  #     - name: Check out code
-  #       uses: actions/checkout@v2
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v2
-  #       with:
-  #         python-version: '3.x'
-  #     - name: Install dependencies
-  #       run: |
-  #         python -m pip install --upgrade pip
-  #         pip install -r requirements.txt
-  #     - name: Deploy Model (Placeholder)
-  #       run: |
-  #         echo "Deploying the model to production..."
+  #   # Checkout code
+  #   - name: Checkout code
+  #     uses: actions/checkout@v2
+
+  #   # Set up Python environment
+  #   - name: Set up Python 3.x
+  #     uses: actions/setup-python@v2
+  #     with:
+  #       python-version: '3.10'
+
+  #   # Install dependencies
+  #   - name: Install dependencies
+  #     run: |
+  #       python -m pip install --upgrade pip
+  #       pip install -r requirements.txt
+
+  #   # Train and log the model using MLflow
+  #   - name: Train and log model with MLflow
+  #     run: |
+  #       python model/model.py  # This trains and logs the model with MLflow
+
+  #   # Upload model to MLflow (if it's on a custom server)
+  #   - name: Log model to MLflow server
+  #     run: |
+  #       # Ensure MLflow is pointed to the correct server
+  #       export MLFLOW_TRACKING_URI=http://mlflow-server-url  # Set MLflow server URL if remote
+  #       mlflow server --host 0.0.0.0 --port 5000 &  # Optional, if starting an MLflow server in this step
+  #     env:
+  #       MLFlow_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}  # Use your MLflow server URL from secrets
+
+  #   # SSH into EC2 instance and deploy model
+  #   - name: Deploy model to EC2
+  #     run: |
+  #       ssh -i ${{ secrets.EC2_SSH_PRIVATE_KEY }} ec2-user@your-ec2-public-ip << 'EOF'
+  #         cd /home/ec2-user/ml-app
+  #         export MLFLOW_TRACKING_URI=http://mlflow-server-url
+  #         # Install MLflow on EC2 (if not already installed)
+  #         pip install mlflow
+  #         # Download the model from MLflow registry
+  #         python app/app.py
+  #         # Restart Flask app if it's already running
+  #         systemctl restart flask-app.service
+  #       EOF
+  #     env:
+  #       MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }} 
